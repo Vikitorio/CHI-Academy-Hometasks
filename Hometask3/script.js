@@ -57,35 +57,48 @@ const nextPaginationButton = document.querySelector(".pagination-next");
 const pageDisplayer = document.querySelector(".pagination-page");
 const characterList = document.querySelector(".character-list");
 const baseUrl = "https://rickandmortyapi.com/api/character";
+
+
 let pageData = {};
 let currentPage = 1;
-pageDisplayer.textContent = currentPage;
 let lastPage = 1;
-const changePage = async (eventData) => {
-    const direction = eventData.target.dataset.direction;
-    const url = pageData.info[direction];
-    if (url) {
+pageDisplayer.textContent = currentPage;
 
-        updatePaginationButtonStatus();
-        const newData = await fetchCharacters(url);
-        currentPage = newData.info.next ? newData.info.next.split("=")[1] - 1 : newData.info.pages;
-        pageDisplayer.textContent = currentPage;
-        renderPage(newData);
-    }
-
+const eventHandlers = {
+    changePage: (eventData) => changePage(pageData.info[eventData.target.dataset.direction]),
 }
+
 const updatePaginationButtonStatus = () => {
     prevPaginationButton.disabled = currentPage == 1;
     nextPaginationButton.disabled = currentPage == lastPage;
 }
-
 const addDelay = (delayTime) => {
-    return new Promise(resolve => setTimeout(resolve, delayTime))
+    return new Promise(resolve => setTimeout(resolve, delayTime));
 }
+
+const changePage = async (url) => {
+    if (url) {
+        try {
+            const newData = await fetchCharacters(url);
+            currentPage = newData.info.next ? newData.info.next.split("=")[1] - 1 : newData.info.pages;
+            updatePaginationButtonStatus();
+            pageDisplayer.textContent = currentPage;
+            renderPage(newData);
+        } catch (error) {
+            alert(error.message);
+        }
+
+    }
+
+}
+
 const fetchCharacters = async (url) => {
     characterList.innerHTML = `<div class="loading">Loading ...<div>`;
     await addDelay(1000);
     const responce = await fetch(url);
+    if (!responce.ok) {
+        throw new Error("Failed to fetch");
+    }
     const parsedData = await responce.json();
     pageData = parsedData;
     lastPage = parsedData.info.pages;
@@ -114,12 +127,6 @@ document.querySelector("body").addEventListener("click", async (event) => {
     eventHandlers[eventType] && eventHandlers[eventType](event);
 
 });
-const eventHandlers = {
-    changePage: (eventData) => {
-        changePage(eventData)
-    },
-}
-fetchCharacters(baseUrl).then((charList) => {
-    renderPage(charList);
-    updatePaginationButtonStatus();
-});
+
+
+changePage(baseUrl);
