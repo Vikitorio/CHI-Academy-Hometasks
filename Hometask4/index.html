@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="character-container">
+        <div class="character-list"></div>
+        <div class="character-loading" hidden>Loading...</div>
+    </div>
+    <div class="character-modal" data-event="toggleModal" hidden>
+
+        <div class="character-modal__content">
+            <div class="character-modal__controls">
+                <button data-event="toggleModal" class="character-modal__close">Close</button>
+            </div>
+            <div>
+                <div class="character-modal__imagebox">
+                    <img class="character-modal__image" src=""></img>
+                </div>
+                <p class="character-modal__name"></p>
+                <p class="character-modal__status"></p>
+                <p class="character-modal__gender"></p>
+                <p class="character-modal__species"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
