@@ -8,7 +8,7 @@ module.exports = (env, args) => {
     entry: './index.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'my-first-webpack.bundle.js',
+      filename: '[name].[contenthash].js',
     },
     mode: isProduction ? "production" : "development",
     devServer: {
@@ -19,6 +19,11 @@ module.exports = (env, args) => {
     plugins: [
       new HtmlWebpackPlugin({ template: './src/index.html' })
     ],
+    optimization: {
+      splitChunks: {
+        chunks: "all",
+      },
+    },
     module: {
       rules: [
         {
