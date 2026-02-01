@@ -9,7 +9,7 @@ module.exports = (env, args) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js',
-      publicPath: '/'
+      publicPath: isProduction ? './' : "/"
     },
     mode: isProduction ? "production" : "development",
     devServer: {
