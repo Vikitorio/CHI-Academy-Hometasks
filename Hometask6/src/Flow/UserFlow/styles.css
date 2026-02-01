@@ -1,0 +1,5 @@
+.user-flow{
+    display: flex;
+    margin-top: 35px;
+    height: calc(100vh - 35px);
+}
