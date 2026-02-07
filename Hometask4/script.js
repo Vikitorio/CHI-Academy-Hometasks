@@ -49,7 +49,7 @@ const fetchCharacters = async (url) => {
 
     await addDelay(1000);
     const responce = await fetch(url);
-    if (!responce.ok){
+    if (!responce.ok) {
         throw new Error("Failed to fetch data");
     }
     const parsedData = await responce.json();

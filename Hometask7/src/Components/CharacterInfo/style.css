@@ -1,0 +1,10 @@
+.char_info__card{
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.char_info__card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
